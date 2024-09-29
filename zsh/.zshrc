@@ -14,8 +14,6 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export RISCV="/opt/riscv"
-export PATH=/opt/riscv/bin/:$PATH
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -122,28 +120,33 @@ source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Set up fzf key bindings and fuzzy completion
-# eval "$(fzf --zsh)"
-
+# nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# fzf 設定
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --zsh)"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# fzf 設定
+# ctrl + r
 export FZF_DEFAULT_OPTS=" \
---color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
---color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
---color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
---color=selected-bg:#45475a \
---multi"
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+  --color=selected-bg:#45475a \
+  --multi
+  --border sharp"
 
+# ctrl + t
 export FZF_CTRL_T_OPTS="--preview '(batcat {} || tree -C {}) 2> /dev/null | head -200'\
   --height 60% \
   --border sharp \
   "
 
+# alt + c
 export FZF_ALT_C_OPTS="--preview '(batcat {} || tree -C {}) 2> /dev/null | head -200'\
   --height 60% \
   --border sharp \
@@ -152,7 +155,12 @@ export FZF_ALT_C_OPTS="--preview '(batcat {} || tree -C {}) 2> /dev/null | head 
 # pwndbg
 export PATH="/home/yuto/.local/bin:$PATH"
 
-# tmux
-if [ "$TMUX" = "" ]; then tmux; fi
+# TMUX
+# Attach or create session "tamp" when start zsh without creating a new session.
+if [ "$TMUX" = "" ]; then tmux a -t temp || tmux new -s temp; fi
+
+# RISC-V
+export RISCV="/opt/riscv"
+export PATH=/opt/riscv/bin/:$PATH
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
