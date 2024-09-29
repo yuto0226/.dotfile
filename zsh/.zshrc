@@ -126,30 +126,35 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # fzf 設定
-# Set up fzf key bindings and fuzzy completion
-eval "$(fzf --zsh)"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# ctrl + r
-export FZF_DEFAULT_OPTS=" \
+# default
+export FZF_DEFAULT_OPTS="--tmux \
   --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
   --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
   --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
   --color=selected-bg:#45475a \
   --multi
-  --border sharp"
+  --border"
+
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
 
 # ctrl + t
-export FZF_CTRL_T_OPTS="--preview '(batcat {} || tree -C {}) 2> /dev/null | head -200'\
+export FZF_CTRL_T_OPTS="--tmux\
+  --preview '(batcat {} || tree -C {}) 2> /dev/null | head -200'\
   --height 60% \
-  --border sharp \
+  --border\
   "
 
 # alt + c
-export FZF_ALT_C_OPTS="--preview '(batcat {} || tree -C {}) 2> /dev/null | head -200'\
+export FZF_ALT_C_OPTS="--tmux\
+  --preview '(batcat {} || tree -C {}) 2> /dev/null | head -200'\
   --height 60% \
-  --border sharp \
+  --border\
   "
 
 # pwndbg
