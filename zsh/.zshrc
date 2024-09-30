@@ -21,9 +21,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
-
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -162,10 +159,9 @@ export PATH="/home/yuto/.local/bin:$PATH"
 
 # TMUX
 # Attach or create session "tamp" when start zsh without creating a new session.
-if [ "$TMUX" = "" ]; then tmux a -t temp || tmux new -s temp; fi
+if [ "$TMUX" = "" ]; then tmux a -t temp 2>/dev/null || tmux new -s temp; fi
 
 # RISC-V
 export RISCV="/opt/riscv"
 export PATH=/opt/riscv/bin/:$PATH
 
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
