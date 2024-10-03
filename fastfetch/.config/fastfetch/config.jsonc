@@ -1,34 +1,75 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-  "modules": [
-    "title",
-    "separator",
-    "os",
-    "host",
-    "kernel",
-    "uptime",
-    "packages",
-    "shell",
-    "display",
-    "de",
-    "wm",
-    "wmtheme",
-    "theme",
-    "icons",
-    "font",
-    "cursor",
-    "terminal",
-    "terminalfont",
-    "cpu",
-    "gpu",
-    "memory",
-    "swap",
-    "disk",
-    "localip",
-    "battery",
-    "poweradapter",
-    "locale",
-    "break",
-    "colors"
-  ]
+  "logo": {
+    "source": "~/.config/fastfetch/kitten.txt",
+          "height": 4,
+          "padding": {
+                  "top": 2
+          }
+  },
+  // "modules": [
+  //   "title",
+  //   "break",
+  //   "os",
+  //   "host",
+  //   "kernel",
+  //   "de",
+  //   "cpu",
+  //   "memory",
+  //   "break",
+  //   "colors"
+  // ]
+  "display": {
+        "separator": " "
+    },
+    "modules": [
+        "break",
+        "break",
+        {
+            "type": "title",
+            "keywidth": 10
+        },
+        "break",
+        {
+            "type": "os",
+            "key": "  OS",
+            "keycolor": "33",  // = color3
+        },
+        {
+            "type": "kernel",
+            "key": " ",
+            "keycolor": "33",
+        },
+        {
+            "type": "packages",
+            "format": "{} (apt)",
+            "key": " ",
+            "keycolor": "33",  
+        },
+        {
+            "type": "shell",
+            "key": " ",
+            "keycolor": "33", 
+        },
+        // {
+        //     "type": "terminal",
+        //     "key": " ",
+        //     "keycolor": "33", 
+        // },
+        // {
+        //     "type": "wm",
+        //     "key": " ",
+        //     "keycolor": "33", 
+        // },
+        {
+            "type": "uptime",
+            "key": " ",
+            "keycolor": "33", 
+        },
+        "break",
+        "colors",
+        "break",
+        "break",
+    ]
 }
+
