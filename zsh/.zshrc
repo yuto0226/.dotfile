@@ -1,4 +1,4 @@
-alias vim="nvim"
+# alias vim="nvim"
 alias nv="nvim"
 alias bat="batcat"
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
