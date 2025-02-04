@@ -11,13 +11,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
+# Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
+# load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -87,7 +87,6 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-source ~/.bash_profile
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -98,30 +97,26 @@ source ~/.bash_profile
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# export ARCHFLAGS="-arch $(uname -m)"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # fzf 設定
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -139,7 +134,8 @@ export FZF_DEFAULT_OPTS="--tmux \
 export FZF_CTRL_R_OPTS="
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --color header:italic
-  --header 'Press CTRL-Y to copy command into clipboard'"
+  --header 'Press CTRL-Y to copy command into clipboard'
+  "
 
 # ctrl + t
 export FZF_CTRL_T_OPTS="--tmux\
@@ -158,11 +154,16 @@ export FZF_ALT_C_OPTS="--tmux\
 # pwndbg
 export PATH="/home/yuto/.local/bin:$PATH"
 
-# TMUX
-# Attach or create session "tamp" when start zsh without creating a new session.
-if [ "$TMUX" = "" ]; then tmux a -t temp 2>/dev/null || tmux new -s temp; fi
-
 # RISC-V
 export RISCV="/opt/riscv"
 export PATH=/opt/riscv/bin/:$PATH
 
+# TMUX
+# Attach or create session "temp" when start zsh without creating a new session.
+if [ -t 1 ] && [ -z "$TMUX" ]; then
+  if tmux has-session -t temp 2>/dev/null; then
+    tmux attach-session -t temp
+  else
+    tmux new-session -s temp
+  fi
+fi
