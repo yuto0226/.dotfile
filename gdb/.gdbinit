@@ -34,7 +34,7 @@ Initializes GEF (GDB Enhanced Features)
 end
 
 define init-gdb-dashboard
-source ~/gdb-dashboard
+source ~/gdb-dashboard/.gdbinit
 end
 document init-gdb-dashboard
 Initializes GDB dashboard
