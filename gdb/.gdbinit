@@ -33,4 +33,11 @@ document init-gef
 Initializes GEF (GDB Enhanced Features)
 end
 
+define init-gdb-dashboard
+source ~/gdb-dashboard
+end
+document init-gdb-dashboard
+Initializes GDB dashboard
+end
+
 add-auto-load-safe-path /home/yuto/xv6-labs-2024
