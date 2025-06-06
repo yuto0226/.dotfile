@@ -182,3 +182,10 @@ if [ -t 1 ] && [ -z "$TMUX" ]; then
     tmux new-session -s temp
   fi
 fi
+
+# fnm
+FNM_PATH="/home/yuto/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/home/yuto/.local/share/fnm:$PATH"
+  eval "`fnm env`"
+fi
