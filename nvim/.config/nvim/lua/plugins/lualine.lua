@@ -51,11 +51,10 @@ return {
       },
       sections = {
         lualine_a = { mode },
-        lualine_b = { 'branch' },
+        lualine_b = { 'branch', diff },
         lualine_c = { filename },
         lualine_x = {
           diagnostics,
-          diff,
           { 'encoding', cond = hide_in_width },
           {
             'fileformat',
@@ -69,8 +68,8 @@ return {
           },
           { 'filetype' },
         },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' },
+        lualine_y = {},
+        lualine_z = { 'progress', 'location' },
       },
       inactive_sections = {
         lualine_a = {},
