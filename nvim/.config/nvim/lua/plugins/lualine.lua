@@ -12,7 +12,7 @@ return {
     local filename = {
       'filename',
       file_status = true, -- displays file status (readonly status, modified status)
-      path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
+      path = 0,           -- 0 = just filename, 1 = relative path, 2 = absolute path
     }
 
     local hide_in_width = function()
@@ -22,9 +22,8 @@ return {
     local diagnostics = {
       'diagnostics',
       sources = { 'nvim_diagnostic' },
-      sections = { 'error', 'warn' },
+      sections = { 'error', 'warn', 'info', 'hint' },
       symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
-      colored = false,
       update_in_insert = false,
       always_visible = false,
       cond = hide_in_width,
@@ -32,7 +31,6 @@ return {
 
     local diff = {
       'diff',
-      colored = false,
       symbols = { added = ' ', modified = ' ', removed = ' ' }, -- changes diff symbols
       cond = hide_in_width,
     }
@@ -45,14 +43,14 @@ return {
         -- https://www.nerdfonts.com/cheat-sheet
         --        
         section_separators = { left = '', right = '' },
-        component_separators = { left = '|', right = '|' },
+        component_separators = { left = '', right = '' },
         disabled_filetypes = { 'alpha', 'neo-tree' },
         always_divide_middle = true,
       },
       sections = {
         lualine_a = { mode },
-        lualine_b = { 'branch', diff },
-        lualine_c = { filename },
+        lualine_b = { 'branch' },
+        lualine_c = { filename, diff },
         lualine_x = {
           diagnostics,
           { 'encoding', cond = hide_in_width },
@@ -66,10 +64,10 @@ return {
               mac = 'CR',
             },
           },
-          { 'filetype' },
+          'filetype',
         },
-        lualine_y = {},
-        lualine_z = { 'progress', 'location' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
       },
       inactive_sections = {
         lualine_a = {},
