@@ -41,6 +41,7 @@ require('lazy').setup {
     require 'plugins.alpha', -- Startup dashboard
     require 'plugins.indent-blankline', -- Indentation guides
     require 'plugins.misc', -- Miscellaneous plugins
+    require 'plugins.rust', -- rust
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
