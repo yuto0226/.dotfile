@@ -9,13 +9,14 @@ install_pkg gdb
 SRC="$HOME/src"
 mkdir -p "$SRC"
 
-# pwndbg
-if [[ -d "$SRC/pwndbg" ]]; then
+# pwndbg — use sentinel file to detect completed setup (directory alone is unreliable)
+if [[ -f "$SRC/pwndbg/.setup_done" ]]; then
   ok "pwndbg already installed"
 else
   info "Installing pwndbg..."
   clone_if_missing "https://github.com/pwndbg/pwndbg" "$SRC/pwndbg"
   (cd "$SRC/pwndbg" && ./setup.sh)
+  touch "$SRC/pwndbg/.setup_done"
 fi
 
 # peda
