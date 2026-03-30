@@ -1,0 +1,13 @@
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive TZ=UTC
+
+# Prerequisites: sudo + basics needed before install.sh can run
+RUN apt-get update && apt-get install -y \
+      sudo git curl \
+    && useradd -m -s /bin/bash testuser \
+    && echo "testuser ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/testuser \
+    && rm -rf /var/lib/apt/lists/*
+
+USER testuser
+WORKDIR /home/testuser

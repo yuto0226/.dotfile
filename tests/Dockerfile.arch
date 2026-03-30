@@ -1,0 +1,11 @@
+FROM archlinux:latest
+
+# Prerequisites: sudo + basics needed before install.sh can run
+RUN pacman -Syu --noconfirm \
+    && pacman -S --noconfirm sudo git curl \
+    && useradd -m -s /bin/bash testuser \
+    && echo "testuser ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/testuser \
+    && pacman -Scc --noconfirm
+
+USER testuser
+WORKDIR /home/testuser

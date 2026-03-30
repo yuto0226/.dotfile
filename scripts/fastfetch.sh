@@ -11,6 +11,7 @@ install_fastfetch() {
       ;;
     ubuntu|debian)
       # Always ensure PPA is present so future apt upgrades come from it
+      install_pkg software-properties-common
       sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch
       sudo apt-get update -qq
       install_pkg fastfetch
