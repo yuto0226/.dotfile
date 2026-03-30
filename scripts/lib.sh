@@ -36,7 +36,7 @@ install_pkg() {
       fi
       ;;
     ubuntu|debian)
-      if ! dpkg -l "$pkg" &>/dev/null || ! dpkg -l "$pkg" 2>/dev/null | grep -q "^ii"; then
+      if ! dpkg -l "$pkg" 2>/dev/null | grep -q "^ii"; then
         info "Installing $pkg (apt)..."
         sudo apt-get install -y "$pkg"
       else
