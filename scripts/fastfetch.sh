@@ -10,14 +10,10 @@ install_fastfetch() {
       install_pkg fastfetch
       ;;
     ubuntu|debian)
-      if ! command -v fastfetch &>/dev/null; then
-        info "Adding fastfetch PPA..."
-        sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch
-        sudo apt-get update
-        sudo apt-get install -y fastfetch
-      else
-        ok "fastfetch already installed"
-      fi
+      # Always ensure PPA is present so future apt upgrades come from it
+      sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch
+      sudo apt-get update -qq
+      install_pkg fastfetch
       ;;
   esac
 }
