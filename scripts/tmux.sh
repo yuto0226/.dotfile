@@ -12,8 +12,6 @@ clone_if_missing "https://github.com/tmux-plugins/tpm" "$TPM_DIR"
 
 stow_pkg tmux
 
-# Install TPM plugins non-interactively (requires tmux server to be running
-# or we can just install them directly without a server)
 info "Installing TPM plugins..."
 "$TPM_DIR/bin/install_plugins"
 
