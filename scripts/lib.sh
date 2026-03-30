@@ -3,10 +3,10 @@ set -euo pipefail
 
 # ── Colours ───────────────────────────────────────────────────────────────────
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RESET='\033[0m'
-info()    { echo -e "${GREEN}[INFO]${RESET}  $*"; }
-warn()    { echo -e "${YELLOW}[WARN]${RESET}  $*"; }
-error()   { echo -e "${RED}[ERROR]${RESET} $*" >&2; exit 1; }
-ok()      { echo -e "${GREEN}[OK]${RESET}    $*"; }
+info()    { echo -e "${GREEN}[*]${RESET}  $*"; }
+warn()    { echo -e "${YELLOW}[!]${RESET}  $*"; }
+error()   { echo -e "${RED}[-]${RESET} $*" >&2; exit 1; }
+ok()      { echo -e "${GREEN}[+]${RESET}    $*"; }
 
 # ── OS detection ──────────────────────────────────────────────────────────────
 detect_os() {
