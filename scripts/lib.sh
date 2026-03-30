@@ -24,6 +24,8 @@ detect_os() {
 OS=$(detect_os)
 
 # ── Package installation ───────────────────────────────────────────────────────
+_apt_updated=0
+
 install_pkg() {
   local pkg=$1
   case "$OS" in
@@ -37,6 +39,11 @@ install_pkg() {
       ;;
     ubuntu|debian)
       if ! dpkg -l "$pkg" 2>/dev/null | grep -q "^ii"; then
+        if [[ "$_apt_updated" == "0" ]]; then
+          info "Updating apt package lists..."
+          sudo apt-get update -qq
+          _apt_updated=1
+        fi
         info "Installing $pkg (apt)..."
         sudo apt-get install -y "$pkg"
       else
@@ -66,9 +73,12 @@ clone_if_missing() {
 }
 
 # Run stow for a package from the dotfile repo
+# --adopt pulls any pre-existing plain files into the stow dir;
+# the git checkout immediately restores our tracked content.
 stow_pkg() {
   local pkg=$1
   info "Stowing $pkg..."
-  stow --dir="$DOTFILE_DIR" --target="$HOME" --restow "$pkg"
+  stow --dir="$DOTFILE_DIR" --target="$HOME" --adopt --restow "$pkg"
+  git -C "$DOTFILE_DIR" checkout -- "$pkg/" 2>/dev/null || true
   ok "$pkg stowed"
 }
