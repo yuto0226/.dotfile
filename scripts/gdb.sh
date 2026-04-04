@@ -15,7 +15,7 @@ if [[ -f "$SRC/pwndbg/.setup_done" ]]; then
 else
   info "Installing pwndbg..."
   clone_if_missing "https://github.com/pwndbg/pwndbg" "$SRC/pwndbg"
-  (cd "$SRC/pwndbg" && ./setup.sh)
+  (cd "$SRC/pwndbg" && { yes n || true; } | ./setup.sh)
   touch "$SRC/pwndbg/.setup_done"
 fi
 

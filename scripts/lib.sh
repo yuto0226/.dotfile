@@ -3,10 +3,10 @@ set -euo pipefail
 
 # ── Colours ───────────────────────────────────────────────────────────────────
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RESET='\033[0m'
-info()    { echo -e "${GREEN}[*]${RESET}  $*"; }
-warn()    { echo -e "${YELLOW}[!]${RESET}  $*"; }
+info()    { echo -e "${GREEN}[*]${RESET} $*"; }
+warn()    { echo -e "${YELLOW}[!]${RESET} $*"; }
 error()   { echo -e "${RED}[-]${RESET} $*" >&2; exit 1; }
-ok()      { echo -e "${GREEN}[+]${RESET}    $*"; }
+ok()      { echo -e "${GREEN}[+]${RESET} $*"; }
 
 # ── OS detection ──────────────────────────────────────────────────────────────
 detect_os() {
@@ -72,13 +72,21 @@ clone_if_missing() {
   fi
 }
 
-# Run stow for a package from the dotfile repo
-# --adopt pulls any pre-existing plain files into the stow dir;
-# the git checkout immediately restores our tracked content.
+# Run stow for a package from the dotfile repo.
+# Walk the package dir first and remove any plain (non-symlink) files in HOME
+# that would conflict — stow version output formats differ so we avoid parsing them.
 stow_pkg() {
-  local pkg=$1
+  local pkg=$1 pkgdir rel target
+  pkgdir="$DOTFILE_DIR/$pkg"
   info "Stowing $pkg..."
-  stow --dir="$DOTFILE_DIR" --target="$HOME" --adopt --restow "$pkg"
-  git -C "$DOTFILE_DIR" checkout -- "$pkg/" 2>/dev/null || true
+  while IFS= read -r -d '' src; do
+    rel="${src#${pkgdir}/}"
+    target="$HOME/$rel"
+    if [[ -f "$target" && ! -L "$target" ]]; then
+      warn "Backing up conflicting file: ~/$rel → ~/${rel}.bak"
+      mv "$target" "${target}.bak"
+    fi
+  done < <(find "$pkgdir" -mindepth 1 -not -type d -print0)
+  stow --dir="$DOTFILE_DIR" --target="$HOME" --restow "$pkg"
   ok "$pkg stowed"
 }
