@@ -5,6 +5,11 @@ return {
     name = "catppuccin",
     opts = {
       transparent_background = true, -- disables setting the background color.
+      custom_highlights = {
+        NormalFloat = { bg = "NONE" },
+        FloatBorder = { bg = "NONE" },
+        FloatTitle = { bg = "NONE" },
+      },
       integrations = {
         aerial = true,
         alpha = true,
@@ -42,17 +47,6 @@ return {
         treesitter = true,
         treesitter_context = true,
         which_key = true,
-      },
-    },
-    specs = {
-      {
-        "akinsho/bufferline.nvim",
-        optional = true,
-        opts = function(_, opts)
-          if (vim.g.colors_name or ""):find("catppuccin") then
-            opts.highlights = require("catppuccin.groups.integrations.bufferline").get()
-          end
-        end,
       },
     },
   },

@@ -6,7 +6,8 @@ source "$SCRIPT_DIR/scripts/lib.sh"
 
 usage() {
   echo "Usage: $0 [zsh|tmux|gdb|fastfetch|all]"
-  echo "  No args → installs everything (same as 'all')"
+  echo "default is all"
+  exit 0
 }
 
 run_installer() {
@@ -35,5 +36,5 @@ else
   done
 fi
 
-info ""
+printf "\n"
 info "All done! Open a new shell or run: exec zsh"
