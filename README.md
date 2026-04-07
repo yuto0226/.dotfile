@@ -1,133 +1,88 @@
 # Yuto's Dotfiles
 
-This repository contains configuration files for various tools, including Zsh, Tmux, GDB, Fastfetch, and NVim.
+Dotfiles for Zsh, Tmux, GDB, Fastfetch, Neovim, Kitty, and Starship — managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-## How to Use
+## Quick Start
 
-First, install `stow` for dotfile management:
+Clone the repository and run the install script:
+
+```zsh
+git clone https://github.com/yuto0226/.dotfile.git ~/.dotfile
+cd ~/.dotfile
+./install.sh          # install all tools
+./install.sh zsh      # or install specific tool(s)
+```
+
+Supported targets: `zsh`, `tmux`, `gdb`, `fastfetch`
+
+## Manual Setup
+
+Install `stow`, then symlink any package into `$HOME`:
 
 ```zsh
 sudo apt install -y stow
+cd ~/.dotfile
+stow zsh              # replace with any package directory
 ```
 
-Next, clone this repository and use `stow` to manage the desired configuration. For example, to use the Zsh configuration:
+## Packages
+
+### Zsh
+
+- **Theme:** [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
+- **Plugins:** [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions), [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting), [zsh-you-should-use](https://github.com/MichaelAquilina/zsh-you-should-use), git, tmux, docker, golang, uv, rust
+- **Extras:** fzf integration, modular config under `~/.zsh/`
+
+The install script sets Zsh as the default shell automatically.
+
+### Tmux
+
+- **Prefix:** `Ctrl + a`
+- **Plugins (via [TPM](https://github.com/tmux-plugins/tpm)):**
+  - [tmux-cpu](https://github.com/tmux-plugins/tmux-cpu) — CPU/memory status
+  - [tmux-yank](https://github.com/tmux-plugins/tmux-yank) — clipboard integration
+  - [tokyo-night-tmux](https://github.com/janoamaral/tokyo-night-tmux) — theme
+  - [aw-watcher-tmux](https://github.com/akohlbecker/aw-watcher-tmux) — ActivityWatch integration
+
+Key bindings:
+
+| Key           | Action                     |
+| ------------- | -------------------------- |
+| `prefix + \|` | Split horizontally         |
+| `prefix + -`  | Split vertically           |
+| `prefix + r`  | Reload config              |
+| `h/j/k/l`     | Navigate panes (Vim-aware) |
+
+### GDB
+
+Multiple GDB profiles selectable via wrapper scripts:
+
+| Command          | Profile                                                     |
+| ---------------- | ----------------------------------------------------------- |
+| `gdb`            | Standard GDB                                                |
+| `gdb-dashboard`  | [GDB Dashboard](https://github.com/cyrus-and/gdb-dashboard) |
+| `gdb-peda`       | [PEDA](https://github.com/longld/peda)                      |
+| `gdb-peda-intel` | PEDA (Intel syntax)                                         |
+| `gdb-peda-arm`   | PEDA (ARM)                                                  |
+| `gdb-gef`        | [GEF](https://github.com/hugsy/gef)                         |
+| `gdb-pwndbg`     | [Pwndbg](https://github.com/pwndbg/pwndbg)                  |
+
+### Fastfetch
+
+System info display. Config at `.config/fastfetch/config.jsonc`.
 
 ```zsh
-git clone https://github.com/yuto0226/.dotfile.git && cd .dotfile
-stow zsh # Replace 'zsh' with any package in this repository
+fastfetch   # or use the alias: fetch
 ```
 
-## Zsh
+### Neovim
 
-To use the provided Zsh configuration, install `zsh` and `oh-my-zsh`:
+Based on [LazyVim](https://www.lazyvim.org/). Config at `nvim/.config/nvim/`.
 
 ```zsh
-sudo apt install -y zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+nvim   # or use the alias: nv
 ```
 
-Then, use `stow` to apply the configuration:
+### Kitty
 
-```zsh
-stow zsh
-```
-
-Finally, set Zsh as the default shell:
-
-```zsh
-chsh -s $(which zsh)
-```
-
-Restart your terminal to apply the changes.
-
-### Zsh Plugins
-
-- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
-- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
-- [zsh-you-should-use](https://github.com/MichaelAquilina/zsh-you-should-use)
-
-## Tmux
-
-To use the provided Tmux configuration, install `tmux`:
-
-```zsh
-sudo apt install -y tmux
-```
-
-Apply the configuration using `stow`:
-
-```zsh
-stow tmux
-```
-
-Start Tmux:
-
-```zsh
-tmux
-```
-
-Install [TPM](https://github.com/tmux-plugins/tpm) for plugin management.
-
-The prefix key is set to `Ctrl + a`. You can split windows using `prefix + |` and `prefix + -`.
-
-## GDB
-
-This configuration includes various GDB plugins:
-
-- [GDB Dashboard](https://github.com/cyrus-and/gdb-dashboard)
-- [PEDA](https://github.com/longld/peda)
-- [GEF](https://github.com/hugsy/gef)
-- [Pwndbg](https://github.com/pwndbg/pwndbg)
-
-To use them, clone the repository and run the corresponding GDB command. For example:
-
-```zsh
-gdb             # Standard GDB
-gdb-dashboard   # GDB with GDB Dashboard
-gdb-peda        # GDB with PEDA
-gdb-gef         # GDB with GEF
-gdb-pwndbg      # GDB with Pwndbg
-```
-
-## Fastfetch
-
-Fastfetch is a CLI tool for displaying system information. To use the provided configuration, install `fastfetch`:
-
-```zsh
-sudo apt install -y fastfetch
-```
-
-Apply the configuration using `stow`:
-
-```zsh
-stow fastfetch
-```
-
-Run Fastfetch:
-
-```zsh
-fastfetch
-```
-
-## NVim
-
-This NVim configuration is based on LazyVim. To use it, first add the unstable PPA and install `nvim`:
-
-```zsh
-sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt update
-sudo apt install -y neovim
-```
-
-Apply the configuration using `stow`:
-
-```zsh
-stow nvim
-```
-
-Open NVim:
-
-```zsh
-nvim
-```
+Terminal emulator config at `kitty/.config/kitty/kitty.conf`.
